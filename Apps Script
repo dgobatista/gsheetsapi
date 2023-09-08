@@ -1,0 +1,24 @@
+function doGet(req) {
+  var Investimento = req.parameter.Investimento;
+  var doc = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = doc.getSheetByName('ConfigAPI');
+  var values = sheet.getDataRange().getValues();
+
+  var saida = [];
+  for(var i = 0; i < values.length; i++) {
+    var row = {};
+    row['Investimento'] = values[i][0];
+    row['Lucro'] = values[i][1];
+    row['ROI'] = values[i][2];
+    saida.push(row);
+  }
+
+  if(Investimento != null){
+      var RetornoDaSaida = saida.filter()(obj => obj.investimento.toLowerCase().includes(Investimento.tolowrcase()));
+      return ContentService.createTextOutput(JSON.stringify({RetornoDaSaida})).setMimeType(ContentService.MimeType.JSON);
+  }
+
+  return ContentService.createTextOutput(JSON.stringify({saida})).setMimeType(ContentService.MimeType.JSON);
+
+}
+
