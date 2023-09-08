@@ -1,0 +1,27 @@
+document.addEventListener("DOMContentLoaded", function () {
+    // URL da API
+    const apiUrl = "https://script.googleusercontent.com/macros/echo?user_content_key=A378yfiWo4yBO6H49MqGZzrvMgu9ZqvJIrbrmWyi-vEcy1Lj6ePpQGnfpOQOJe55Vedg2OBuGDliFpON-uBx_NfnkWYtRm29m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnHW-pbJQgib5qGT3-saeu47hskz51s5AsqhlLv-g4IPqgci78Xr9L4YhkDfv2KPFfJQLlFW6sY_AHTZKTjDGMmD4Ejy21xEbjQ&lib=M8jGqjORA_cv2VQBudw-Hv-gnXuxWEsqY";
+
+    // Elementos HTML onde você deseja exibir os valores
+    const investimentoElement = document.getElementById("investimentoValue");
+    const lucroElement = document.getElementById("lucroValue");
+    const roiElement = document.getElementById("roiValue");
+
+    // Fazer a solicitação AJAX
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            // Extrair os valores da API
+            const investimento = data.saida[1].Investimento;
+            const lucro = data.saida[1].Lucro;
+            const roi = data.saida[1].ROI;
+
+            // Atualizar os elementos HTML com os valores
+            investimentoElement.textContent = investimento;
+            lucroElement.textContent = lucro;
+            roiElement.textContent = roi;
+        })
+        .catch(error => {
+            console.error("Erro ao buscar dados da API:", error);
+        });
+});
